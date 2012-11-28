@@ -22,17 +22,17 @@ namespace OMine
         public Form1()
         {
             InitializeComponent();
-            gic = panel1.CreateGraphics();
         }
 
         private void start()
         {
-            rowCount = 40;
+            if (dm != null)
+                dm.Dispose();
+            rowCount = 20;
             colCount = 40;
             cellSize = 20;
-            mineCount = 10;
-            panel1.Height = rowCount * cellSize + 1;
-            panel1.Width = colCount * cellSize + 1;
+            mineCount = 40;
+            panel1.Size = new System.Drawing.Size(colCount * cellSize + 1 ,rowCount * cellSize + 1);
             mine = new Mine(rowCount, colCount, mineCount);
             dm = new DrawMine(mine.Cells, cellSize);
             refresh();
@@ -45,9 +45,11 @@ namespace OMine
 
         private void refresh()
         {
-            if (dm != null && gic != null)
+            if (dm != null)
             {
+                gic = panel1.CreateGraphics();
                 gic.DrawImage(dm.Pic, 0, 0);
+                gic.Dispose();
             }
         }
 
@@ -58,7 +60,10 @@ namespace OMine
             int colIndex;
             rowIndex = mea.Y / cellSize;
             colIndex = mea.X / cellSize;
-            mine.DigCell(rowIndex, colIndex);
+            if (mea.Button == System.Windows.Forms.MouseButtons.Left)
+                mine.DigCell(rowIndex, colIndex);
+            else if (mea.Button == System.Windows.Forms.MouseButtons.Right)
+                mine.SetFlag(rowIndex,colIndex);
             dm.Update();
             refresh();
             if (mine.State == MineState.Dead)

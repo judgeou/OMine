@@ -84,6 +84,7 @@ namespace OMine
             if (cell.State != (int)CellState.Empty) return;
             if (cell.HasMine)
             {
+                cell.State = (int)CellState.Mine;
                 State = MineState.Dead;
                 return;
             }
@@ -135,9 +136,19 @@ namespace OMine
             return (rowIndex >= 0 && rowIndex < RowCount) && (colIndex >= 0 && colIndex < ColCount);
         }
 
+        /// <summary>
+        /// 插旗标记
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="colIndex"></param>
         public void SetFlag(int rowIndex, int colIndex)
         {
-            if (Digable(rowIndex, colIndex)) Cells[rowIndex][colIndex].State = (int)CellState.Flag;
+            if (!Digable(rowIndex, colIndex)) return;
+            Cell cell = Cells[rowIndex][colIndex];
+            if (cell.State == (int)CellState.Empty)
+                cell.State = (int)CellState.Flag;
+            else if (cell.State == (int)CellState.Flag)
+                cell.State = (int)CellState.Empty;
         }
     }
 

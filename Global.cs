@@ -13,7 +13,7 @@ namespace OMine
         public static Pen pen { get; set; }
         public static SolidBrush brush { get; set; }
         public static Color color { get; set; }
-        
+
         static Global()
         {
             color = Color.Blue;
