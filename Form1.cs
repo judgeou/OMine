@@ -28,8 +28,8 @@ namespace OMine
         {
             if (dm != null)
                 dm.Dispose();
-            rowCount = 20;
-            colCount = 40;
+            rowCount = 200;
+            colCount = 400;
             cellSize = 20;
             mineCount = 40;
             panel1.Size = new System.Drawing.Size(colCount * cellSize + 1 ,rowCount * cellSize + 1);
@@ -61,9 +61,14 @@ namespace OMine
             rowIndex = mea.Y / cellSize;
             colIndex = mea.X / cellSize;
             if (mea.Button == System.Windows.Forms.MouseButtons.Left)
-                mine.DigCell(rowIndex, colIndex);
+            {
+                if(ModifierKeys == Keys.Control)
+                    mine.AutoDig(rowIndex, colIndex);
+                else
+                    mine.DigCell(rowIndex, colIndex);
+            }
             else if (mea.Button == System.Windows.Forms.MouseButtons.Right)
-                mine.SetFlag(rowIndex,colIndex);
+                mine.SetFlag(rowIndex, colIndex);
             dm.Update();
             refresh();
             if (mine.State == MineState.Dead)

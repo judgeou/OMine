@@ -92,17 +92,27 @@ namespace OMine
             cell.State = MineCountRound(rowIndex, colIndex);
             if(cell.State == 0)
             {
-                for (int i = -1; i < 2; i++)
-                {
-                    for (int j = -1; j < 2; j++)
-                    {
-                        if (Digable(rowIndex + i, colIndex + j)) DigCell(rowIndex + i, colIndex + j);
-                    }
-                }
+                AutoDig(rowIndex, colIndex);
             }
             if (DigCount >= RowCount * ColCount - MineCount)
             {
                 State = MineState.Win;
+            }
+        }
+
+        /// <summary>
+        /// 自动打开周围的方块
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="colIndex"></param>
+        public void AutoDig(int rowIndex, int colIndex)
+        {
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    if (Digable(rowIndex + i, colIndex + j)) DigCell(rowIndex + i, colIndex + j);
+                }
             }
         }
 
