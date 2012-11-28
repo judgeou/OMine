@@ -14,6 +14,7 @@ namespace OMine
         [STAThread]
         static void Main()
         {
+            new Mine(10, 10, 22);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

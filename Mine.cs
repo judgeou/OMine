@@ -29,6 +29,7 @@ namespace OMine
             RowCount = row;
             ColCount = col;
             DigCount = 0;
+            MineCount = mineCount;
             Cells = new Cell[row][];
             for (int i=0; i < row; i++)
             {
@@ -46,15 +47,14 @@ namespace OMine
         /// </summary>
         private void PutMine(int rowIndex, int colIndex)
         {
-            Random rowRan = new Random();
-            Random colRan = new Random();
+            Random Ran = new Random();
             int mineCountNow = 0;
             int row, col;
             Cell cell;
-            while (mineCountNow >= MineCount)
+            while (mineCountNow < MineCount)
             {
-                row = rowRan.Next(RowCount);
-                col = colRan.Next(ColCount);
+                row = Ran.Next(RowCount);
+                col = Ran.Next(ColCount);
                 cell = Cells[row][col];
                 if ( (row!=rowIndex || col!=colIndex) && !cell.HasMine)
                 {
@@ -87,10 +87,19 @@ namespace OMine
                 State = MineState.Dead;
                 return;
             }
-            cell.State = MineCountRound(rowIndex, rowIndex);
-            
             DigCount++;
-            if (DigCount >= RowCount * ColCount)
+            cell.State = MineCountRound(rowIndex, colIndex);
+            if(cell.State == 0)
+            {
+                for (int i = -1; i < 2; i++)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        if (Digable(rowIndex + i, colIndex + j)) DigCell(rowIndex + i, colIndex + j);
+                    }
+                }
+            }
+            if (DigCount >= RowCount * ColCount - MineCount)
             {
                 State = MineState.Win;
             }
@@ -102,18 +111,14 @@ namespace OMine
         /// <param name="rowIndex"></param>
         /// <param name="colIndex"></param>
         /// <returns></returns>
-        private int MineCountRound(int rowIndex, int colIndex)
+        public int MineCountRound(int rowIndex, int colIndex)
         {
             int count = 0;
-            int rowi = rowIndex - 1;
-            int coli = colIndex - 1;
-            for (int i = 0; i < 3; i++)
+            for (int i = -1; i < 2; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = -1; j < 2; j++)
                 {
-                    rowi += i;
-                    coli +=j;
-                    if (Digable(rowi, coli)) count += Cells[rowi][coli].HasMine ? 1 : 0;
+                    if (Digable(rowIndex + i, colIndex + j)) count += Cells[rowIndex + i][colIndex + j].HasMine ? 1 : 0;
                 }
             }
             return count;
