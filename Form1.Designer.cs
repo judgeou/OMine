@@ -110,7 +110,6 @@
             this.自定义ToolStripMenuItem.Name = "自定义ToolStripMenuItem";
             this.自定义ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.自定义ToolStripMenuItem.Text = "自定义";
-            this.自定义ToolStripMenuItem.Click += new System.EventHandler(this.自定义ToolStripMenuItem_Click);
             // 
             // 设置ToolStripMenuItem
             // 

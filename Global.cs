@@ -22,6 +22,8 @@ namespace OMine
             set
             {
                 color = value;
+                Properties.Settings.Default.Color = color;
+                Properties.Settings.Default.Save();
                 pen = new Pen(color);
                 brush = new SolidBrush(color);
             }
@@ -29,7 +31,7 @@ namespace OMine
 
         static Global()
         {
-            color = Color.Blue;
+            color = Properties.Settings.Default.Color;
             NumFont = new Font("Arial", 12);
             pen = new Pen(color);
             brush = new  SolidBrush(color);

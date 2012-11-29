@@ -115,10 +115,5 @@ namespace OMine
             dm.Update();
             refresh();
         }
-
-        private void 自定义ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
