@@ -14,33 +14,28 @@ namespace OMine
     {
         private DrawMine dm;
         private Mine mine;
-        private int rowCount;
-        private int colCount;
-        private int cellSize;
-        private int mineCount;
+        private int rowCount = 9;
+        private int colCount = 9;
+        private int cellSize = 20;
+        private int mineCount = 10;
+        private int widthAdd = 40;
+        private int heightAdd = 90;
         private Graphics gic;
         public Form1()
         {
             InitializeComponent();
+            start();
         }
 
         private void start()
         {
             if (dm != null)
                 dm.Dispose();
-            rowCount = 200;
-            colCount = 400;
-            cellSize = 20;
-            mineCount = 40;
-            panel1.Size = new System.Drawing.Size(colCount * cellSize + 1 ,rowCount * cellSize + 1);
+            this.Size = new System.Drawing.Size(colCount * cellSize + widthAdd, rowCount * cellSize + heightAdd);
+            panel1.Width += 1;
             mine = new Mine(rowCount, colCount, mineCount);
             dm = new DrawMine(mine.Cells, cellSize);
             refresh();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            start();
         }
 
         private void refresh()
@@ -81,6 +76,49 @@ namespace OMine
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             refresh();
+        }
+
+        private void 开局ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            start();
+        }
+
+        private void 初级ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rowCount = 9;
+            colCount = 9;
+            mineCount = 10;
+            start();
+        }
+
+        private void 中级ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rowCount = 16;
+            colCount = 16;
+            mineCount = 40;
+            start();
+        }
+
+        private void 高级ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rowCount = 16;
+            colCount = 30;
+            mineCount = 99;
+            start();
+        }
+
+        private void 颜色ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog cd = new ColorDialog();
+            cd.ShowDialog();
+            Global.Color = cd.Color;
+            dm.Update();
+            refresh();
+        }
+
+        private void 自定义ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

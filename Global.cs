@@ -12,7 +12,20 @@ namespace OMine
         public static Font NumFont { get; set; }
         public static Pen pen { get; set; }
         public static SolidBrush brush { get; set; }
-        public static Color color { get; set; }
+        private static Color color;
+        public static Color Color
+        {
+            get
+            {
+                return color;
+            }
+            set
+            {
+                color = value;
+                pen = new Pen(color);
+                brush = new SolidBrush(color);
+            }
+        }
 
         static Global()
         {
@@ -21,5 +34,7 @@ namespace OMine
             pen = new Pen(color);
             brush = new  SolidBrush(color);
         }
+
+
     }
 }

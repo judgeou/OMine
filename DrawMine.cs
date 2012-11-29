@@ -27,6 +27,17 @@ namespace OMine
         }
 
         /// <summary>
+        /// 重新创建bitmap
+        /// </summary>
+        public void CreateNewMap()
+        {
+            gic.Dispose();
+            Pic.Dispose();
+            Pic = new Bitmap(cells[0].Length * Size + 1, cells.Length * Size + 1);
+            gic = Graphics.FromImage(Pic);
+        }
+
+        /// <summary>
         /// 更新Bitmap
         /// </summary>
         public void Update()
