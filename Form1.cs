@@ -57,7 +57,8 @@ namespace OMine
             colIndex = mea.X / cellSize;
             if (mea.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                if(ModifierKeys == Keys.Control)
+                var state = mine.Cells[rowIndex][colIndex].State;
+                if (state >= 1 && state <= 8)
                     mine.AutoDig(rowIndex, colIndex);
                 else
                     mine.DigCell(rowIndex, colIndex);
