@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OMine
 {
@@ -52,15 +53,19 @@ namespace OMine
                     gic.DrawRectangle(Global.pen, j * Size, i * Size, Size, Size);
                     if (cell.State > -1 && cell.State < 9)
                     {
-                        if(cell.State == 0)
-                            gic.DrawString("○", Global.NumFont, Global.brush, j * Size, i * Size);
+                        if (cell.State == 0)
+                            gic.DrawString("~", Global.NumFont, Global.brush, j * Size, i * Size);
                         else
                             gic.DrawString(cell.State.ToString(), Global.NumFont, Global.brush, j * Size, i * Size);
                     }
-                    else if (cell.State==(int)CellState.Flag)
-                        gic.DrawString("Λ".ToString(), Global.NumFont, Global.brush, j * Size, i * Size);
-                    else if(cell.State == (int)CellState.Mine)
-                        gic.DrawString("X".ToString(), Global.NumFont, Global.brush, j * Size, i * Size);
+                    else if (cell.State == (int)CellState.Flag)
+                    {
+                        TextRenderer.DrawText(gic, "🚩", Global.NumFont, new Point(j * Size, i * Size), Global.Color);
+                    }
+                    else if (cell.State == (int)CellState.Mine)
+                    {
+                        TextRenderer.DrawText(gic, "💣", Global.NumFont, new Point(j * Size, i * Size), Global.Color);
+                    }
                 }
             }
         }
